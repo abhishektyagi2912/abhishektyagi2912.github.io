@@ -72,6 +72,16 @@ export const flagshipProjects = [
     tags: ['Product', 'Gamification', 'Android', 'Growth'],
     accent: 'violet',
   },
+  {
+    id: 'itemvault',
+    name: 'Itemvault',
+    tagline: 'Inventory management, built and shipped end to end.',
+    description:
+      "Inventory/item management backend engineered for scale — built the app from scratch, Dockerized it, and wired up a CI/CD pipeline to AWS EC2 so every push auto-builds and deploys, Vercel-style. S3 storage, Redis caching, and Socket.io for live updates round it out.",
+    link: 'https://github.com/abhishektyagi2912/Itemvault',
+    tags: ['Node.js', 'AWS', 'Docker', 'Redis', 'Socket.io'],
+    accent: 'cyan',
+  },
 ]
 
 export const projects = [
@@ -104,15 +114,6 @@ export const projects = [
     live: 'https://phytogenic-9cch.vercel.app',
   },
   {
-    id: 'itemvault',
-    name: 'Itemvault',
-    description:
-      'Inventory/item management backend engineered for scale — AWS EC2 and S3, Dockerized services, Redis caching, Socket.io for live updates.',
-    tags: ['Node.js', 'AWS', 'Docker', 'Redis', 'Socket.io'],
-    stars: 0,
-    link: 'https://github.com/abhishektyagi2912/Itemvault',
-  },
-  {
     id: 'doubt-hub',
     name: 'Doubt Hub',
     description:
@@ -138,16 +139,6 @@ export const projects = [
     tags: ['Python', 'Deep Learning', 'Jupyter'],
     stars: 0,
     link: 'https://github.com/abhishektyagi2912/Disease-Detection-in-plant',
-  },
-  {
-    id: 'portfolio-dev',
-    name: 'Portfolio v1',
-    description:
-      'The previous version of this site — GSAP-driven page animation with Locomotive Scroll for that buttery scroll-jacked feel.',
-    tags: ['GSAP', 'Locomotive Scroll', 'JavaScript'],
-    stars: 0,
-    link: 'https://github.com/abhishektyagi2912/portfolio.dev',
-    live: 'https://abhishektyagi2912.github.io/portfolio.dev/',
   },
 ]
 

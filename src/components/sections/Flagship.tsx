@@ -61,6 +61,10 @@ export default function Flagship() {
             )
           })}
         </div>
+
+        <p className="mt-8 text-center font-mono text-sm text-mist">
+          + many more live projects — client work, so repos stay private.
+        </p>
       </div>
     </section>
   )
