@@ -65,7 +65,7 @@ export default function Nav() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass absolute inset-x-0 top-full flex flex-col gap-5 px-6 py-8 md:hidden"
+          className="absolute inset-x-0 top-full flex flex-col gap-5 border-b border-line bg-void/98 px-6 py-8 backdrop-blur-xl md:hidden"
         >
           {LINKS.map((l) => (
             <a

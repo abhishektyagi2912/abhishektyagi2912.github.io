@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@config "../tailwind.config.js";
 
 @theme {
   --font-display: "Space Grotesk", "Inter", sans-serif;

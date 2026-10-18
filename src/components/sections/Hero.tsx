@@ -1,7 +1,8 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import HeroScene from '../scene/HeroScene'
 import { profile } from '../../data/content'
+
+const HeroScene = lazy(() => import('../scene/HeroScene'))
 
 const ROLES = ['Software Developer @ Culture Holidays', 'Founder @ TechyznCode', 'Creator of Zenhabicto', 'Builder of 3D & AI things']
 
