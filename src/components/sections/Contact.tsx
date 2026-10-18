@@ -3,6 +3,8 @@ import { Mail, Phone } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, XIcon, InstagramIcon } from '../icons/Brand'
 import { profile } from '../../data/content'
 import MagneticButton from '../ui/MagneticButton'
+import ContactTerminal from '../ContactTerminal'
+import AchievementTrigger from '../AchievementTrigger'
 
 const socials = [
   { icon: GithubIcon, href: profile.socials.github, label: 'GitHub' },
@@ -14,6 +16,7 @@ const socials = [
 export default function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden bg-void px-6 py-32 md:px-12">
+      <AchievementTrigger id="contact" icon="✦" title="Reached the final boss" />
       <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-cyan/10 blur-[140px]" />
 
       <div className="relative mx-auto max-w-5xl text-center">
@@ -48,7 +51,12 @@ export default function Contact() {
           whatever you're stuck on at 1am.
         </motion.p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <div className="mt-14">
+          <ContactTerminal />
+        </div>
+
+        <div className="mt-12 font-mono text-xs uppercase tracking-[0.2em] text-mist/50">or skip the form</div>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
           <MagneticButton
             href={`mailto:${profile.email}`}
             className="gap-2 bg-gradient-to-r from-cyan to-violet px-8 py-4 font-mono text-sm uppercase tracking-[0.15em] text-void"

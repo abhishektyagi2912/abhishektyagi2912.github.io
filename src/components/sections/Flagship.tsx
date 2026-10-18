@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import SectionHeading from '../ui/SectionHeading'
 import TiltCard from '../ui/TiltCard'
+import AchievementTrigger from '../AchievementTrigger'
 import { flagshipProjects } from '../../data/content'
 
 const accentMap: Record<string, { text: string; border: string; glow: string }> = {
@@ -12,6 +13,7 @@ const accentMap: Record<string, { text: string; border: string; glow: string }> 
 export default function Flagship() {
   return (
     <section id="work" className="relative bg-ink px-6 py-28 md:px-12">
+      <AchievementTrigger id="work" icon="★" title="Found the flagship builds" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="04" kicker="Flagship" title="Things I built end to end" />
 

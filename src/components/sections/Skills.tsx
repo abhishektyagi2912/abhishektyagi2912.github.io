@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import SectionHeading from '../ui/SectionHeading'
+import AchievementTrigger from '../AchievementTrigger'
 import { skills } from '../../data/content'
 
 export default function Skills() {
   return (
-    <section className="relative bg-void px-6 py-28 md:px-12">
+    <section id="stack" className="relative bg-void px-6 py-28 md:px-12">
+      <AchievementTrigger id="stack" icon="◈" title="Inspected the stack" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="03" kicker="Stack" title="Tools I reach for" />
 

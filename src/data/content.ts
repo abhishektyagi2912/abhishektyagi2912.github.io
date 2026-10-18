@@ -31,7 +31,7 @@ export const experience = [
     id: 'techyzncode',
     role: 'Founder & Instructor',
     org: 'TechyznCode',
-    period: '2023 — Present',
+    period: '2025 — Present',
     kind: 'Own company',
     description:
       'Precision training for the next generation of builders. Teaches Full-Stack Engineering, AI Engineering, and System Design & Strategy — the systems thinking behind real products, not just API calls. Runs a technical blog covering frontend vs backend tradeoffs, injection-proofing SQL/NoSQL, CDNs, React performance, Kubernetes health checks, and more.',
@@ -42,7 +42,7 @@ export const experience = [
     id: 'zenhabicto',
     role: 'Creator',
     org: 'Zenhabicto',
-    period: '2024 — Present',
+    period: '2026 — Present',
     kind: 'Product, under TechyznCode',
     description:
       "Small habits. Infinite zen. A gamified habit tracker — daily quests across 5 classes (Athlete, Developer, Scholar, Creative, Mindful), XP and 10 progression tiers from Iron to Ascendant, an opt-in Hard Mode that resets your streak on a missed quest, guided no-equipment workout plans, and global/friend leaderboards. 60% of every Premium subscription funds the Game Development Foundation for underprivileged youth.",

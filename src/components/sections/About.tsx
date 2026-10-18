@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import SectionHeading from '../ui/SectionHeading'
+import AchievementTrigger from '../AchievementTrigger'
 import { profile, stats } from '../../data/content'
 
 export default function About() {
   return (
     <section id="about" className="relative bg-void px-6 py-28 md:px-12">
+      <AchievementTrigger id="about" icon="◇" title="Explored the archive" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="01" kicker="About" title="The person behind the commits" />
 

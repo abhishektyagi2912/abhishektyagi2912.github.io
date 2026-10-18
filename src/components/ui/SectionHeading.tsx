@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import ScrambleText from '../ScrambleText'
 
 export default function SectionHeading({
   index,
@@ -19,7 +20,11 @@ export default function SectionHeading({
     >
       <div>
         <div className="font-mono text-xs uppercase tracking-[0.3em] text-cyan">{kicker}</div>
-        <h2 className="mt-3 font-display text-4xl font-semibold text-white md:text-6xl">{title}</h2>
+        <ScrambleText
+          as="h2"
+          text={title}
+          className="mt-3 block font-display text-4xl font-semibold text-white md:text-6xl"
+        />
       </div>
       <div className="font-mono text-sm text-mist/50 md:text-base">{index}</div>
     </motion.div>

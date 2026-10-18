@@ -4,6 +4,11 @@ import SmoothScroll from './components/SmoothScroll'
 import Cursor from './components/Cursor'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import { AchievementProvider } from './context/AchievementContext'
+import ProgressHUD from './components/hud/ProgressHUD'
+import CommandPalette from './components/CommandPalette'
+import KonamiEgg from './components/KonamiEgg'
+import FloatingGlyphs from './components/FloatingGlyphs'
 import Hero from './components/sections/Hero'
 import About from './components/sections/About'
 import Experience from './components/sections/Experience'
@@ -19,21 +24,28 @@ export default function App() {
     <>
       <Loader onDone={() => setLoaded(true)} />
       {loaded && (
-        <SmoothScroll>
-          <Cursor />
-          <Nav />
-          <main>
-            <Hero />
-            <About />
-            <Experience />
-            <Skills />
-            <Flagship />
-            <Projects />
-            <Contact />
-          </main>
-          <Footer />
-          <div className="grain" />
-        </SmoothScroll>
+        <AchievementProvider>
+          <SmoothScroll>
+            <Cursor />
+            <Nav />
+            <ProgressHUD />
+            <CommandPalette />
+            <KonamiEgg />
+            <FloatingGlyphs />
+            <main>
+              <Hero />
+              <About />
+              <Experience />
+              <Skills />
+              <Flagship />
+              <Projects />
+              <Contact />
+            </main>
+            <Footer />
+            <div className="grain" />
+            <div className="scanlines" />
+          </SmoothScroll>
+        </AchievementProvider>
       )}
     </>
   )

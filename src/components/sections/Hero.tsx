@@ -1,6 +1,8 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { profile } from '../../data/content'
+import ScrambleText from '../ScrambleText'
+import AchievementTrigger from '../AchievementTrigger'
 
 const HeroScene = lazy(() => import('../scene/HeroScene'))
 
@@ -8,15 +10,42 @@ const ROLES = ['Software Developer @ Culture Holidays', 'Founder @ TechyznCode',
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
+  const sectionRef = useRef<HTMLElement>(null)
+  const bgRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const id = setInterval(() => setRoleIndex((i) => (i + 1) % ROLES.length), 2600)
     return () => clearInterval(id)
   }, [])
 
+  useEffect(() => {
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const height = sectionRef.current?.offsetHeight ?? 1
+        const p = Math.min(1, Math.max(0, window.scrollY / height))
+        if (bgRef.current) {
+          bgRef.current.style.transform = `translateY(${p * 110}px) scale(${1 + p * 0.08})`
+        }
+        if (contentRef.current) {
+          contentRef.current.style.transform = `translateY(${p * -70}px)`
+          contentRef.current.style.opacity = `${1 - p * 1.3}`
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <section id="top" className="relative flex min-h-[100vh] items-center overflow-hidden bg-void">
-      <div className="absolute inset-0 z-0">
+    <section id="top" ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden bg-void">
+      <AchievementTrigger id="top" icon="◆" title="Entered the simulation" />
+      <div ref={bgRef} className="absolute inset-0 z-0 will-change-transform">
         <Suspense fallback={null}>
           <HeroScene />
         </Suspense>
@@ -24,7 +53,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,6,10,0.4)_75%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 md:px-12">
+      <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 will-change-transform md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,9 +69,9 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 font-display text-[13vw] font-semibold leading-[0.95] text-white md:text-[7.5vw]"
         >
-          Abhishek
+          <ScrambleText text="Abhishek" speed={18} />
           <br />
-          <span className="text-gradient">Tyagi</span>
+          <ScrambleText text="Tyagi" speed={18} className="text-gradient" />
         </motion.h1>
 
         <div className="mt-8 flex h-7 items-center gap-2 font-mono text-sm text-mist md:text-base">

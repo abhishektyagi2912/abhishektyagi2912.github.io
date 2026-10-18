@@ -2,11 +2,13 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight, Star } from 'lucide-react'
 import SectionHeading from '../ui/SectionHeading'
 import TiltCard from '../ui/TiltCard'
+import AchievementTrigger from '../AchievementTrigger'
 import { projects } from '../../data/content'
 
 export default function Projects() {
   return (
     <section id="projects" className="relative bg-void px-6 py-28 md:px-12">
+      <AchievementTrigger id="projects" icon="⬡" title="Raided the GitHub vault" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="05" kicker="Open Source" title="From the GitHub archive" />
 

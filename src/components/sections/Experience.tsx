@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import SectionHeading from '../ui/SectionHeading'
+import AchievementTrigger from '../AchievementTrigger'
 import { experience } from '../../data/content'
 
 export default function Experience() {
   return (
     <section id="experience" className="relative bg-ink px-6 py-28 md:px-12">
+      <AchievementTrigger id="experience" icon="▲" title="Traced the timeline" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="02" kicker="Experience" title="Where the time actually went" />
 
