@@ -1,0 +1,12 @@
+{
+  "name": "Abhishek Tyagi — Software Developer",
+  "short_name": "Abhishek Tyagi",
+  "description": "Software developer at Culture Holidays. Founder of TechyznCode. Creator of Zenhabicto.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05060a",
+  "theme_color": "#05060a",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
