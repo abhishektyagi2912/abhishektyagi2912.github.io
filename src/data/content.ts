@@ -11,7 +11,7 @@ export const profile = {
   socials: {
     github: 'https://github.com/abhishektyagi2912',
     linkedin: 'https://www.linkedin.com/in/abhityagi2912/',
-    twitter: 'https://twitter.com/abhishektyagi2912',
+    twitter: 'https://twitter.com/abhityagi29120',
     instagram: 'https://instagram.com/abhityagi2912',
   },
 }
