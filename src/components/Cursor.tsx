@@ -20,7 +20,8 @@ export default function Cursor() {
       }
       const target = e.target as HTMLElement
       const interactive = target.closest('a, button, [data-cursor="hover"]')
-      ring.current?.classList.toggle('scale-150', !!interactive)
+      ring.current?.classList.toggle('scale-[1.8]', !!interactive)
+      ring.current?.classList.toggle('bg-ink/5', !!interactive)
       ring.current?.classList.toggle('opacity-100', true)
     }
 
@@ -45,13 +46,11 @@ export default function Cursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[70] hidden md:block">
-      <div
-        ref={dot}
-        className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-bright mix-blend-difference"
-      />
+      <div ref={dot} className="absolute -ml-[3px] -mt-[3px] h-1.5 w-1.5 rounded-full bg-ink" />
+      {/* Tailwind's scale-* uses the `scale` property, so it composes with the inline translate */}
       <div
         ref={ring}
-        className="absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan/60 opacity-0 transition-[opacity,transform] duration-300 ease-out"
+        className="absolute -ml-4 -mt-4 h-8 w-8 rounded-full border border-ink/40 opacity-0 transition-[scale,background-color,opacity] duration-300 ease-out"
       />
     </div>
   )

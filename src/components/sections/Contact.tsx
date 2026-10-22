@@ -3,8 +3,7 @@ import { Mail, Phone } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, XIcon, InstagramIcon } from '../icons/Brand'
 import { profile } from '../../data/content'
 import MagneticButton from '../ui/MagneticButton'
-import ContactTerminal from '../ContactTerminal'
-import AchievementTrigger from '../AchievementTrigger'
+import ContactForm from '../ContactForm'
 
 const socials = [
   { icon: GithubIcon, href: profile.socials.github, label: 'GitHub' },
@@ -13,74 +12,91 @@ const socials = [
   { icon: InstagramIcon, href: profile.socials.instagram, label: 'Instagram' },
 ]
 
+const ease = [0.16, 1, 0.3, 1] as const
+
 export default function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-void px-6 py-32 md:px-12">
-      <AchievementTrigger id="contact" icon="✦" title="Reached the final boss" />
-      <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-cyan/10 blur-[140px]" />
-
-      <div className="relative mx-auto max-w-5xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="font-mono text-xs uppercase tracking-[0.3em] text-cyan"
-        >
-          06 — Let's talk
-        </motion.div>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-4 font-display text-5xl font-semibold text-white md:text-7xl"
-        >
-          Got something <span className="text-gradient">worth building?</span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mx-auto mt-6 max-w-xl text-base text-mist md:text-lg"
-        >
-          Open to full-time, freelance, and collaborations — on products, on TechyznCode content, or on
-          whatever you're stuck on at 1am.
-        </motion.p>
-
-        <div className="mt-14">
-          <ContactTerminal />
+    <section id="contact" className="relative overflow-hidden bg-paper px-5 py-28 md:px-10 md:py-36">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2fbf71] animate-pulse-dot" />
+            Available for work
+          </span>
+          <span>(06)</span>
         </div>
 
-        <div className="mt-12 font-mono text-xs uppercase tracking-[0.2em] text-mist/50">or skip the form</div>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
-          <MagneticButton
-            href={`mailto:${profile.email}`}
-            className="gap-2 bg-gradient-to-r from-cyan to-violet px-8 py-4 font-mono text-sm uppercase tracking-[0.15em] text-void"
-          >
-            <Mail size={16} /> {profile.email}
-          </MagneticButton>
-          <MagneticButton
-            href={`tel:${profile.phone.replace(/\s/g, '')}`}
-            className="gap-2 border border-line px-8 py-4 font-mono text-sm text-white hover:border-cyan hover:text-cyan"
-          >
-            <Phone size={16} /> {profile.phone}
-          </MagneticButton>
-        </div>
-
-        <div className="mt-14 flex items-center justify-center gap-5">
-          {socials.map((s) => (
-            <MagneticButton
-              key={s.label}
-              href={s.href}
-              className="h-14 w-14 border border-line text-mist hover:border-cyan hover:text-cyan"
-            >
-              <s.icon size={20} />
-            </MagneticButton>
+        <h2 className="font-display text-[15vw] font-black leading-[0.85] tracking-[-0.06em] text-ink md:text-[9vw]">
+          {["Let's build", 'something.'].map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.1em] -mb-[0.1em]">
+              <motion.span
+                className="block"
+                initial={{ y: '100%' }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: i * 0.12, ease }}
+              >
+                {i === 1 ? (
+                  <>
+                    something<span className="text-accent">.</span>
+                  </>
+                ) : (
+                  line
+                )}
+              </motion.span>
+            </span>
           ))}
+        </h2>
+
+        <div className="mt-16 grid gap-16 border-t border-line pt-12 md:grid-cols-[1fr_1.4fr] md:gap-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="max-w-sm text-lg leading-relaxed text-muted">
+              Open to full-time, freelance and collaborations — on products, on TechyznCode content, or on whatever you're
+              stuck on at 1am.
+            </p>
+
+            <div className="mt-10 space-y-4">
+              <a href={`mailto:${profile.email}`} data-cursor="hover" className="group flex items-center gap-3 text-ink">
+                <Mail size={18} className="text-muted" />
+                <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-0.5 text-lg font-medium transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+                  {profile.email}
+                </span>
+              </a>
+              <a href={`tel:${profile.phone.replace(/\s/g, '')}`} data-cursor="hover" className="group flex items-center gap-3 text-ink">
+                <Phone size={18} className="text-muted" />
+                <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-0.5 text-lg font-medium transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+                  {profile.phone}
+                </span>
+              </a>
+            </div>
+
+            <div className="mt-10 flex items-center gap-3">
+              {socials.map((s) => (
+                <MagneticButton
+                  key={s.label}
+                  href={s.href}
+                  className="h-12 w-12 border border-line bg-card text-ink transition-colors hover:bg-ink hover:text-paper"
+                >
+                  <s.icon size={18} />
+                  <span className="sr-only">{s.label}</span>
+                </MagneticButton>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <ContactForm />
+          </motion.div>
         </div>
       </div>
     </section>

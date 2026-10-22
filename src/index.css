@@ -1,21 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --color-void: #05060a;
-  --color-ink: #0a0c14;
-  --color-surface: #0d1019;
-  --color-line: rgba(255, 255, 255, 0.08);
-
-  --color-cyan: #5eead4;
-  --color-cyan-bright: #7dfff0;
-  --color-violet: #b084ff;
-  --color-violet-bright: #d4b8ff;
-  --color-lime: #d4ff5e;
-  --color-mist: #a8b0c3;
+  --color-paper: #f5f4f0;
+  --color-card: #ffffff;
+  --color-sand: #ebe8df;
+  --color-ink: #111111;
+  --color-muted: #6b6a65;
+  --color-line: rgba(17, 17, 17, 0.1);
+  --color-accent: #e8692e;
 }
 
 * {
@@ -23,33 +19,32 @@
 }
 
 html {
-  background: var(--color-void);
-  color-scheme: dark;
+  background: var(--color-paper);
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  background: var(--color-void);
-  color: #eef1f8;
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-cyan);
-  color: #05060a;
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-void);
+  background: var(--color-paper);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-cyan), var(--color-violet));
+  background: #c9c7bf;
   border-radius: 999px;
 }
 
@@ -60,81 +55,126 @@ body {
   font-family: var(--font-mono);
 }
 
-/* Noise grain overlay */
-.grain {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.text-gradient {
-  background: linear-gradient(110deg, var(--color-cyan) 0%, var(--color-violet-bright) 55%, var(--color-violet) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.mask-fade-b {
-  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes blink {
-  0%, 45% { opacity: 1; }
-  50%, 95% { opacity: 0; }
-  100% { opacity: 1; }
-}
-.animate-blink {
-  animation: blink 1s steps(1) infinite;
-}
-
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: marquee 48s linear infinite;
 }
 
-.glass {
-  background: rgba(13, 16, 25, 0.55);
-  border: 1px solid var(--color-line);
-  backdrop-filter: blur(16px);
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* ---------- Avatar motion ---------- */
+
+.av-head,
+.av-blink,
+.av-breathe,
+.av-nod,
+.av-type-l,
+.av-type-r,
+.av-sway,
+.av-bubble,
+.av-steam path {
+  transform-box: fill-box;
 }
 
-/* CRT scanline texture */
-.scanlines {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  opacity: 1;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.035) 0px,
-    rgba(255, 255, 255, 0.035) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+.av-breathe {
+  transform-origin: 50% 100%;
+  animation: av-breathe 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes av-breathe {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-1.5px) scaleY(1.004); }
 }
 
-@keyframes levelFlash {
-  0% { box-shadow: 0 0 0 rgba(94, 234, 212, 0); }
-  30% { box-shadow: 0 0 24px rgba(94, 234, 212, 0.5); }
-  100% { box-shadow: 0 0 0 rgba(94, 234, 212, 0); }
+.av-head {
+  transform-origin: 50% 95%;
+  animation: av-head 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
-.animate-level-flash {
-  animation: levelFlash 0.9s ease-out;
+@keyframes av-head {
+  0%, 100% { transform: rotate(0deg); }
+  35% { transform: rotate(-1.8deg); }
+  70% { transform: rotate(1.2deg); }
+}
+
+.av-nod {
+  transform-origin: 50% 95%;
+  animation: av-nod 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes av-nod {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(1deg) translateY(1px); }
+}
+
+.av-blink {
+  transform-origin: 50% 50%;
+  animation: av-blink 4.6s infinite;
+}
+@keyframes av-blink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  95.5% { transform: scaleY(0.1); }
+}
+
+.av-type-l,
+.av-type-r {
+  transform-origin: 0% 0%;
+  animation: av-type 0.55s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+.av-type-r {
+  transform-origin: 100% 0%;
+  animation-delay: 0.27s;
+}
+@keyframes av-type {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-2px) rotate(-1deg); }
+}
+
+.av-sway {
+  transform-origin: 50% 100%;
+  animation: av-sway 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes av-sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+.av-bubble {
+  transform-origin: 50% 50%;
+  animation: av-bubble 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes av-bubble {
+  0% { transform: translateY(8px) scale(0.8); opacity: 0; }
+  20%, 70% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-14px) scale(0.9); opacity: 0; }
+}
+
+.av-steam path {
+  animation: av-steam 4s ease-in-out infinite;
+  opacity: 0;
+}
+.av-steam path:nth-child(2) { animation-delay: 1.3s; }
+.av-steam path:nth-child(3) { animation-delay: 2.6s; }
+@keyframes av-steam {
+  0% { transform: translateY(6px); opacity: 0; }
+  40% { opacity: 0.55; }
+  100% { transform: translateY(-14px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="av-"],
+  [class*=" av-"],
+  .av-steam path,
+  .animate-marquee {
+    animation: none !important;
+  }
+  .av-steam path {
+    opacity: 0.6;
+  }
 }

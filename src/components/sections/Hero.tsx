@@ -1,123 +1,135 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import { profile } from '../../data/content'
-import ScrambleText from '../ScrambleText'
-import AchievementTrigger from '../AchievementTrigger'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowDownRight } from 'lucide-react'
+import { AvatarWave } from '../avatar/Avatar'
+import { experience, flagshipProjects, projects } from '../../data/content'
 
-const HeroScene = lazy(() => import('../scene/HeroScene'))
+const YEAR = String(new Date().getFullYear())
+const ease = [0.22, 1, 0.36, 1] as const
 
-const ROLES = ['Software Developer @ Culture Holidays', 'Founder @ TechyznCode', 'Creator of Zenhabicto', 'Builder of 3D & AI things']
+function RevealLine({ children, delay }: { children: React.ReactNode; delay: number }) {
+  return (
+    <span className="block overflow-hidden pb-[0.04em]">
+      <motion.span
+        className="block"
+        initial={{ y: '105%' }}
+        animate={{ y: 0 }}
+        transition={{ duration: 1.4, delay, ease }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  )
+}
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0)
-  const sectionRef = useRef<HTMLElement>(null)
-  const bgRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const avatarY = useTransform(scrollYProgress, [0, 1], [0, 140])
+  const avatarScale = useTransform(scrollYProgress, [0, 1], [1, 0.9])
+  const nameY = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0])
 
-  useEffect(() => {
-    const id = setInterval(() => setRoleIndex((i) => (i + 1) % ROLES.length), 2600)
-    return () => clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const height = sectionRef.current?.offsetHeight ?? 1
-        const p = Math.min(1, Math.max(0, window.scrollY / height))
-        if (bgRef.current) {
-          bgRef.current.style.transform = `translateY(${p * 110}px) scale(${1 + p * 0.08})`
-        }
-        if (contentRef.current) {
-          contentRef.current.style.transform = `translateY(${p * -70}px)`
-          contentRef.current.style.opacity = `${1 - p * 1.3}`
-        }
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
+  const latest = experience.find((e) => e.id === 'zenhabicto')
+  const totalProjects = flagshipProjects.length + projects.length
 
   return (
-    <section id="top" ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden bg-void">
-      <AchievementTrigger id="top" icon="◆" title="Entered the simulation" />
-      <div ref={bgRef} className="absolute inset-0 z-0 will-change-transform">
-        <Suspense fallback={null}>
-          <HeroScene />
-        </Suspense>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-void" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,6,10,0.4)_75%)]" />
-      </div>
+    <section id="top" ref={ref} className="relative h-[100svh] min-h-[640px] overflow-hidden bg-paper">
+      {/* soft spotlight behind the avatar */}
+      <div className="pointer-events-none absolute left-1/2 top-[55%] h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white blur-[60px]" />
 
-      <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 will-change-transform md:px-12">
+      {/* side labels */}
+      <motion.div
+        style={{ opacity: fade }}
+        initial={{ opacity: 0, x: -16 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, delay: 0.9, ease }}
+        className="absolute left-5 top-[38%] z-20 hidden max-w-[180px] md:left-10 md:block"
+      >
+        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Latest</div>
+        <div className="mt-2 h-px w-8 bg-ink" />
+        {latest && (
+          <a href={latest.link} target="_blank" rel="noreferrer" data-cursor="hover" className="mt-3 block text-[12px] leading-snug text-muted hover:text-ink">
+            {latest.org} — live on Google Play
+          </a>
+        )}
+      </motion.div>
+
+      <motion.div
+        style={{ opacity: fade }}
+        initial={{ opacity: 0, x: 16 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, delay: 0.9, ease }}
+        className="absolute right-5 top-[38%] z-20 hidden text-right md:right-10 md:block"
+      >
+        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">Projects</div>
+        <div className="ml-auto mt-2 h-px w-8 bg-ink" />
+        <a href="#work" data-cursor="hover" className="mt-3 block text-[12px] text-muted hover:text-ink">
+          {String(totalProjects).padStart(2, '0')}+ shipped →
+        </a>
+      </motion.div>
+
+      {/* avatar */}
+      <motion.div
+        style={{ y: avatarY, scale: avatarScale }}
+        className="absolute bottom-[-2%] left-1/2 z-10 h-[72%] -translate-x-1/2 md:h-[86%]"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="font-mono text-xs uppercase tracking-[0.35em] text-cyan"
+          className="h-full"
+          initial={{ opacity: 0, y: 60, scale: 0.97, filter: 'blur(12px)' }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 1.8, delay: 0.2, ease }}
         >
-          Based in India — open to remote work
+          <AvatarWave className="h-full w-auto drop-shadow-[0_30px_40px_rgba(0,0,0,0.08)]" />
         </motion.div>
+      </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 font-display text-[13vw] font-semibold leading-[0.95] text-white md:text-[7.5vw]"
-        >
-          <ScrambleText text="Abhishek" speed={18} />
-          <br />
-          <ScrambleText text="Tyagi" speed={18} className="text-gradient" />
-        </motion.h1>
-
-        <div className="mt-8 flex h-7 items-center gap-2 font-mono text-sm text-mist md:text-base">
-          <span className="text-lime">&gt;</span>
-          <span key={roleIndex} className="animate-[fadeIn_0.4s_ease]">
-            {ROLES[roleIndex]}
+      {/* name */}
+      <motion.h1
+        style={{ y: nameY }}
+        className="absolute bottom-5 left-5 z-20 font-display text-[17vw] font-black uppercase leading-[0.82] tracking-[-0.055em] text-ink md:bottom-8 md:left-10 md:text-[8.6vw]"
+      >
+        <RevealLine delay={0.5}>Abhishek</RevealLine>
+        <RevealLine delay={0.65}>
+          Tyagi
+          <span className="ml-3 inline-block align-top pt-[0.4em] text-[0.14em] font-semibold tracking-[0.08em] text-muted">
+            ©{YEAR}
           </span>
-          <span className="animate-blink text-cyan">_</span>
-        </div>
+        </RevealLine>
+      </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-8 max-w-xl text-base text-mist md:text-lg"
+      {/* intro */}
+      <motion.div
+        style={{ opacity: fade }}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 1.1, ease }}
+        className="absolute bottom-8 right-10 z-20 hidden max-w-[270px] md:block"
+      >
+        <p className="text-[13px] leading-relaxed text-muted">
+          I'm a software developer at <span className="text-ink">Culture Holidays</span>, founder of{' '}
+          <span className="text-ink">TechyznCode</span> and creator of <span className="text-ink">Zenhabicto</span> — building
+          products end to end, from backend to the pixels.
+        </p>
+        <a
+          href="#work"
+          data-cursor="hover"
+          className="group mt-4 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-ink"
         >
-          {profile.blurb}
-        </motion.p>
+          See the work
+          <ArrowDownRight size={14} className="transition-transform group-hover:rotate-[-45deg]" />
+        </a>
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 flex flex-wrap gap-4"
-        >
-          <a
-            href="#work"
-            data-cursor="hover"
-            className="rounded-full bg-gradient-to-r from-cyan to-violet px-7 py-3 font-mono text-xs uppercase tracking-[0.2em] text-void transition-transform hover:scale-105"
-          >
-            See the work
-          </a>
-          <a
-            href="#contact"
-            data-cursor="hover"
-            className="rounded-full border border-line px-7 py-3 font-mono text-xs uppercase tracking-[0.2em] text-white transition-colors hover:border-cyan hover:text-cyan"
-          >
-            Get in touch
-          </a>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-mist/60">
-        <div className="mx-auto mb-2 h-10 w-px bg-gradient-to-b from-cyan to-transparent" />
-        Scroll
-      </div>
+      {/* mobile chip */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute left-1/2 top-20 z-20 -translate-x-1/2 rounded-full border border-line bg-white/70 px-4 py-1.5 text-[11px] font-medium text-muted backdrop-blur md:hidden"
+      >
+        Software Developer · India
+      </motion.div>
     </section>
   )
 }

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import ScrambleText from '../ScrambleText'
 
 export default function SectionHeading({
   index,
@@ -11,22 +10,25 @@ export default function SectionHeading({
   kicker: string
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="mb-14 flex items-end justify-between gap-6 border-b border-line pb-6"
-    >
-      <div>
-        <div className="font-mono text-xs uppercase tracking-[0.3em] text-cyan">{kicker}</div>
-        <ScrambleText
-          as="h2"
-          text={title}
-          className="mt-3 block font-display text-4xl font-semibold text-white md:text-6xl"
-        />
+    <div className="mb-14 border-b border-line pb-6 md:mb-20">
+      <div className="mb-5 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
+        <span className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          {kicker}
+        </span>
+        <span>({index})</span>
       </div>
-      <div className="font-mono text-sm text-mist/50 md:text-base">{index}</div>
-    </motion.div>
+      <h2 className="overflow-hidden pb-[0.1em] font-display text-[11vw] font-black leading-[0.9] tracking-[-0.05em] text-ink md:text-7xl">
+        <motion.span
+          className="block"
+          initial={{ y: '100%' }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {title}
+        </motion.span>
+      </h2>
+    </div>
   )
 }
